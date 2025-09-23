@@ -16,4 +16,5 @@ clearml-task \
     --name hello-bash \
     --queue muller \
     --task-type custom \
+    --repo https://github.com/sparticlesteve/clearml-testing.git \
     --script hello_world.sh
