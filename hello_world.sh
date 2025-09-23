@@ -4,4 +4,8 @@
 echo "Hello world from a ClearML bash task!"
 env | grep SLURM
 
-echo "$@"
+echo "Args: $@"
+
+# Software loading
+module load pytorch
+module list
