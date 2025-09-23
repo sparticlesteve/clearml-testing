@@ -8,13 +8,15 @@ if ! pip show clearml > /dev/null 2>&1; then
     echo "Installing clearml..."
     pip install --no-cache-dir clearml
 else
-    echo "clearml is already installed."
+    echo "clearml: already installed"
 fi
 
+set -x
 clearml-task \
     --project clearml-testing \
     --name hello-bash \
     --queue muller \
     --task-type custom \
     --repo https://github.com/sparticlesteve/clearml-testing.git \
-    --script hello_world.sh
+    --script hello_world.sh \
+    --args arg1=value1

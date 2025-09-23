@@ -4,4 +4,4 @@
 echo "Hello world from a ClearML bash task!"
 env | grep SLURM
 
-
+echo "$@"
