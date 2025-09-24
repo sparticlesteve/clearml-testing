@@ -20,12 +20,15 @@ export OMP_NUM_THREADS=8
 
 ls
 
+which python
+pip list
+
 # Launch example with torchrun
-torchrun \
-    --nnodes=$SLURM_JOB_NUM_NODES \
-    --nproc-per-node=$SLURM_GPUS_PER_NODE \
-    --rdzv-backend=c10d \
-    --rdzv-endpoint=$MASTER_ADDR:$MASTER_PORT \
-    nlp_example.py
+#torchrun \
+#    --nnodes=$SLURM_JOB_NUM_NODES \
+#    --nproc-per-node=$SLURM_GPUS_PER_NODE \
+#    --rdzv-backend=c10d \
+#    --rdzv-endpoint=$MASTER_ADDR:$MASTER_PORT \
+#    nlp_example.py
 
 echo "SUCCESS"
