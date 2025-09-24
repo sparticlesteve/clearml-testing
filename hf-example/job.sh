@@ -4,6 +4,7 @@ set -x
 
 which python
 env | grep PYTHON
+env | grep PATH
 pip list
 
 # Environment setup
