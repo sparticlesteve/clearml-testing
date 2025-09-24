@@ -1,9 +1,9 @@
 #!/bin/bash
 
-set -x
-
 # Environment setup
 module load pytorch/2.6.0
+
+set -x
 
 # Use scratch for huggingface cache
 export HF_HOME=$SCRATCH/cache/huggingface
