@@ -1,5 +1,7 @@
 #!/bin/bash
 
+which python
+
 # Environment setup
 module load pytorch/2.6.0
 
@@ -21,6 +23,7 @@ export OMP_NUM_THREADS=8
 ls
 
 which python
+env | grep PYTHON
 pip list
 
 # Launch example with torchrun
