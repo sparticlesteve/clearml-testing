@@ -3,9 +3,10 @@
 set -x
 
 which python
+pip list
 env | grep PYTHON
 env | grep PATH
-pip list
+env | grep ENV
 
 # Environment setup
 #module load pytorch/2.6.0
