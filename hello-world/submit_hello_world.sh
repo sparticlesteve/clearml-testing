@@ -19,5 +19,5 @@ clearml-task \
     --task-type custom \
     --repo https://github.com/sparticlesteve/clearml-testing.git \
     --force-no-requirements \
-    --script hello_world.sh \
+    --script hello-world/hello_world.sh \
     --args arg1=value1
