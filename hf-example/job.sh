@@ -8,9 +8,8 @@ pip list
 #env | grep PATH
 #env | grep ENV
 pwd
-ls ..
-ls ../..
-ls ../../..
+ls ../../../bin
+export PATH=../../../bin:$PATH
 
 # Environment setup
 #module load pytorch/2.6.0
