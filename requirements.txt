@@ -4,3 +4,5 @@ accelerate
 datasets
 evaluate
 transformers
+scipy
+sklearn
