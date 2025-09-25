@@ -2,23 +2,26 @@
 
 set -ex
 
+echo "Initial environment checks:"
 which python
-pip list
+#pip list
 #env | grep PYTHON
 #env | grep PATH
 #env | grep ENV
 #pwd
-#ls ../../../bin
 
 # Update path to pickup torchrun command
-export PATH=../../../bin:$PATH
+#ls ../../../bin
+#export PATH=../../../bin:$PATH
+
+# Module-based environment setup
+# Need to clear PYTHONPATH to avoid conflicts
+unset PYTHONPATH
+module load pytorch/2.6.0
 
 # Python binary tests
 which python
 python -c "print('hello')"
-
-# Environment setup
-#module load pytorch/2.6.0
 
 ## Use scratch for huggingface cache
 #export HF_HOME=$SCRATCH/cache/huggingface
