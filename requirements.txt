@@ -5,4 +5,4 @@ datasets
 evaluate
 transformers
 scipy
-sklearn
+scikit-learn
