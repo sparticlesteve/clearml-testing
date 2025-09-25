@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ml pytorch
+ml python
 
 set -x
 clearml-task \
