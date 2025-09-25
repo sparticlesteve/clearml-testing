@@ -26,7 +26,7 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer, get_
 
 from accelerate import Accelerator, DistributedType
 
-from clearml import Task
+from clearml import Task, Logger
 
 
 task = Task.init()
@@ -202,6 +202,13 @@ def training_function(config, args):
         eval_metric = metric.compute()
         # Use accelerator.print to print only on the main process.
         accelerator.print(f"epoch {epoch}:", eval_metric)
+        logger = Logger.current_logger()
+        logger.report_scalar(
+            title="Accuracy", series="test", iteration=epoch, value=eval_metric["accuracy"]
+        )
+        logger.report_scalar(
+            title="F1", series="test", iteration=epoch, value=eval_metric["f1"]
+        )
 
 
 def main():
@@ -218,6 +225,10 @@ def main():
     parser.add_argument("--cpu", action="store_true", help="If passed, will train on the CPU.")
     args = parser.parse_args()
     config = {"lr": 2e-5, "num_epochs": 3, "seed": 42, "batch_size": 16}
+
+    print("CONFIG:")
+    print(args)
+    print(config)
     training_function(config, args)
 
 
