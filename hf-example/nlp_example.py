@@ -26,6 +26,11 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer, get_
 
 from accelerate import Accelerator, DistributedType
 
+from clearml import Task
+
+
+task = Task.init()
+
 
 ########################################################################
 # This is a fully working simple example to use Accelerate
