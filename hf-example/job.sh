@@ -20,6 +20,9 @@ which python
 unset PYTHONPATH
 module load pytorch/2.6.0
 
+# Install clearml package
+pip install clearml
+
 # Python binary tests
 which python
 python -c "print('hello')"
