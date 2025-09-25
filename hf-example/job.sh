@@ -27,6 +27,8 @@ env | grep MASTER
 export OMP_NUM_THREADS=8
 #export NCCL_DEBUG=INFO
 
+env | grep SLURM
+
 # Launch example with torchrun
 torchrun \
     --nnodes=$SLURM_JOB_NUM_NODES \
