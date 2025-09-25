@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x
+set -ex
 
 which python
 pip list
@@ -9,6 +9,8 @@ pip list
 #env | grep ENV
 #pwd
 #ls ../../../bin
+
+# Update path to pickup torchrun command
 export PATH=../../../bin:$PATH
 
 # Environment setup
