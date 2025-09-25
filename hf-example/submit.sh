@@ -10,5 +10,6 @@ clearml-task \
     --task-type training \
     --repo https://github.com/sparticlesteve/clearml-testing.git \
     --cwd hf-example \
+    --binary /bin/bash \
     --script job.sh \
     --args mixed_precision=bf16
