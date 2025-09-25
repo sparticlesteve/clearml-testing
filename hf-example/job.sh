@@ -7,8 +7,8 @@ pip list
 #env | grep PYTHON
 #env | grep PATH
 #env | grep ENV
-pwd
-ls ../../../bin
+#pwd
+#ls ../../../bin
 export PATH=../../../bin:$PATH
 
 # Environment setup
@@ -32,7 +32,7 @@ env | grep SLURM
 # Launch example with torchrun
 torchrun \
     --nnodes=$SLURM_JOB_NUM_NODES \
-    --nproc-per-node=$SLURM_GPUS_PER_TASK \
+    --nproc-per-node=${SLURM_GPUS_PER_TASK:-4} \
     --rdzv-backend=c10d \
     --rdzv-endpoint=$MASTER_ADDR:$MASTER_PORT \
     nlp_example.py
