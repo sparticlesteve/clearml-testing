@@ -30,7 +30,7 @@ export OMP_NUM_THREADS=8
 # Launch example with torchrun
 torchrun \
     --nnodes=$SLURM_JOB_NUM_NODES \
-    --nproc-per-node=$SLURM_GPUS_PER_NODE \
+    --nproc-per-node=$SLURM_GPUS_PER_TASK \
     --rdzv-backend=c10d \
     --rdzv-endpoint=$MASTER_ADDR:$MASTER_PORT \
     nlp_example.py
