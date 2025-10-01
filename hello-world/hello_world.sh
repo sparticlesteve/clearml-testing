@@ -10,4 +10,4 @@ echo "Args: $@"
 #module load pytorch
 #module list
 
-python hello_python.py
+python hello-world/hello_python.py
