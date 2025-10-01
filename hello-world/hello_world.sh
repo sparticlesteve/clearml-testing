@@ -7,5 +7,7 @@ env | grep SLURM
 echo "Args: $@"
 
 # Software loading
-module load pytorch
-module list
+#module load pytorch
+#module list
+
+python hello_python.py
