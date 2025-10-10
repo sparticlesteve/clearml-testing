@@ -18,6 +18,6 @@ clearml-task \
     --queue muller \
     --task-type custom \
     --repo https://github.com/sparticlesteve/clearml-testing.git \
-    --binary /bin/bash
+    --binary /bin/bash \
     --script hello-world/hello_world.sh \
     --args arg1=value1
