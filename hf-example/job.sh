@@ -5,9 +5,6 @@ set -ex
 echo "Initial environment checks:"
 which python
 #pip list
-#env | grep PYTHON
-#env | grep PATH
-#env | grep ENV
 #env | grep SLURM
 #pwd
 
