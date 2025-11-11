@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# This task script demonstrates the use of pytorch modules
+# and distributed training with torchrun.
+
 set -ex
 
 echo "Initial environment checks:"
