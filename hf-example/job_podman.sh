@@ -25,6 +25,8 @@ cont_params=(
     --env HF_* --env MASTER_*
     --net host
 )
+#-v $HOME/clearml.conf:/root/clearml.conf:ro
+#-e CLEARML_CONFIG_FILE=/root/clearml.conf
 
 # Launch example with podman+torchrun
 podman-hpc run ${cont_params[@]} $image \
