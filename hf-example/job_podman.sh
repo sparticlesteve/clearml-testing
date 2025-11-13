@@ -2,8 +2,9 @@
 
 set -ex
 
-env | grep PYTHONPATH
-env | grep PYTHONHOME
+#env | grep PYTHONPATH
+#env | grep PYTHONHOME
+unset PYTHONPATH
 
 # Use scratch for huggingface cache
 export HF_HOME=$SCRATCH/cache/huggingface
