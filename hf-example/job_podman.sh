@@ -4,7 +4,7 @@ set -ex
 
 #env | grep PYTHONPATH
 #env | grep PYTHONHOME
-unset PYTHONPATH
+#unset PYTHONPATH
 
 # Use scratch for huggingface cache
 export HF_HOME=$SCRATCH/cache/huggingface
@@ -23,15 +23,17 @@ cont_params=(
     --rm --gpu --nccl
     -v .:/workspace
     --env HF_* --env MASTER_*
+    --net host
 )
 
 # Launch example with podman+torchrun
 podman-hpc run ${cont_params[@]} $image \
-    torchrun \
-    --nnodes=$SLURM_JOB_NUM_NODES \
-    --nproc-per-node=${SLURM_GPUS_PER_TASK:-4} \
-    --rdzv-backend=c10d \
-    --rdzv-endpoint=$MASTER_ADDR:$MASTER_PORT \
-    nlp_example.py
+    hostname
+    #torchrun \
+    #--nnodes=$SLURM_JOB_NUM_NODES \
+    #--nproc-per-node=${SLURM_GPUS_PER_TASK:-4} \
+    #--rdzv-backend=c10d \
+    #--rdzv-endpoint=$MASTER_ADDR:$MASTER_PORT \
+    #nlp_example.py
 
 echo "SUCCESS"
