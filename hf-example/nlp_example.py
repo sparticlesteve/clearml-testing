@@ -212,6 +212,9 @@ def training_function(config, args):
             title="F1", series="test", iteration=epoch, value=eval_metric["f1"]
         )
 
+    # Finalize training
+    accelerator.end_training()
+
 
 def main():
     parser = argparse.ArgumentParser(description="Simple example of training script.")

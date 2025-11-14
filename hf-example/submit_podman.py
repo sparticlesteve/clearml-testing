@@ -38,13 +38,20 @@ def main():
     commit = get_git_commit()
     print(f"using git commit: {commit}")
 
+    # Job config
+    num_nodes = 1
+
+    # Build the launch command
+    launch_cmd = f"torch.distributed.run --nnodes={num_nodes} --nproc-per-node=4 nlp_example.py"
+
     # Create a task with some hardcoded configuration
     task = Task.create(
         project_name="clearml-testing",
         task_name="hf-example",
         task_type="training",
         #binary="/bin/bash",
-        script="nlp_example.py",
+        module=launch_cmd,
+        #script="nlp_example.py",
         #script="job_podman.sh",
         repo="https://github.com/sparticlesteve/clearml-testing.git",
         commit=commit,
@@ -57,7 +64,7 @@ def main():
 
     # SLURM job settings
     task.set_user_properties(
-        num_nodes=1,
+        num_nodes=num_nodes,
     )
 
     # Print the configuration
