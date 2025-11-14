@@ -6,16 +6,6 @@ import clearml
 from clearml import Task
 
 
-def get_git_commit():
-    """Return the current git commit hash in the current repo."""
-    try:
-        args = ["git", "rev-parse", "HEAD"]
-        commit = subprocess.check_output(args, stderr=subprocess.DEVNULL).decode().strip()
-        return commit
-    except subprocess.CalledProcessError:
-        return None
-
-
 def get_task_summary(task: Task) -> Dict[str, Any]:
     summary = dict(
         id=task.id,
@@ -24,7 +14,6 @@ def get_task_summary(task: Task) -> Dict[str, Any]:
         name=task.name,
         status=task.get_status(),
         tags=list(task.get_tags() or []),
-        # parameters=task.get_parameters(),
         parameters=task.get_parameters_as_dict(),
         user_properties=task.get_user_properties(),
         script=task.get_script(),
@@ -33,10 +22,6 @@ def get_task_summary(task: Task) -> Dict[str, Any]:
 
 
 def main():
-
-    # Get the current commit hash
-    commit = get_git_commit()
-    print(f"using git commit: {commit}")
 
     # Job config
     num_nodes = 1
@@ -49,12 +34,8 @@ def main():
         project_name="clearml-testing",
         task_name="hf-example",
         task_type="training",
-        #binary="/bin/bash",
         module=launch_cmd,
-        #script="nlp_example.py",
-        #script="job_podman.sh",
         repo="https://github.com/sparticlesteve/clearml-testing.git",
-        #commit=commit,
         working_directory="hf-example",
         argparse_args=[("mixed_precision", "bf16")],
         docker="nersc/pytorch:25.06.01",
