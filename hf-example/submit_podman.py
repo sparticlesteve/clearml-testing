@@ -43,14 +43,14 @@ def main():
         project_name="clearml-testing",
         task_name="hf-example",
         task_type="training",
-        binary="/bin/bash",
-        script="job_podman.sh",
+        #binary="/bin/bash",
+        script="nlp_example.py",
+        #script="job_podman.sh",
         repo="https://github.com/sparticlesteve/clearml-testing.git",
         commit=commit,
         working_directory="hf-example",
         argparse_args="",
-        # requirements_file=requirements_file,
-        # docker=docker_image,
+        docker="nersc/pytorch:25.06.01",
         # docker_args=docker_args,
         # docker_bash_setup_script=docker_setup_bash,
     )
@@ -67,7 +67,7 @@ def main():
     # Enqueue the task
     enqueue_response = Task.enqueue(
         task=task,
-        queue_name="muller",
+        queue_name="experimental",
     )
 
     print("\nTASK ENQUEUED:")

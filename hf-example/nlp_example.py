@@ -125,8 +125,10 @@ def training_function(config, args):
 
     # BEGIN NERSC MODIFICATIONS
     import socket
-    rank = torch.distributed.get_rank()
-    n_ranks = torch.distributed.get_world_size()
+    rank = accelerator.process_index
+    n_ranks = accelerator.num_processes
+    #rank = torch.distributed.get_rank()
+    #n_ranks = torch.distributed.get_world_size()
     print(f'Initialized accelerator: rank {rank} size {n_ranks} node {socket.gethostname()}')
     # END NERSC MODIFICATIONS
 
