@@ -56,7 +56,7 @@ def main():
         repo="https://github.com/sparticlesteve/clearml-testing.git",
         commit=commit,
         working_directory="hf-example",
-        argparse_args="",
+        argparse_args=[("--mixed_precision", "bf16")],
         docker="nersc/pytorch:25.06.01",
         # docker_args=docker_args,
         # docker_bash_setup_script=docker_setup_bash,
