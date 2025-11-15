@@ -15,6 +15,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os
 import argparse
 
 import evaluate
@@ -120,10 +121,13 @@ def get_dataloaders(accelerator: Accelerator, batch_size: int = 16):
 
 
 def training_function(config, args):
+
     # Initialize accelerator
     accelerator = Accelerator(cpu=args.cpu, mixed_precision=args.mixed_precision)
 
     # BEGIN NERSC MODIFICATIONS
+    print(f"MASTER_ADDR {os.getenv('MASTER_ADDR')}")
+    print(f"MASTER_PORT {os.getenv('MASTER_PORT')}")
     import socket
     rank = accelerator.process_index
     n_ranks = accelerator.num_processes

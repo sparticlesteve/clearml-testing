@@ -25,27 +25,33 @@ def main():
 
     # Job config
     num_nodes = 1
+    ntasks_per_node = 4
+    cpus_per_task = 32
+    #container_args = "--network=host"
 
     # Build the launch command
-    launch_cmd = f"torch.distributed.run --nnodes={num_nodes} --nproc-per-node=4 nlp_example.py"
+    #launch_cmd = f"torch.distributed.run --rdzv-backend=c10d --nnodes={num_nodes} --nproc-per-node=4 nlp_example.py"
 
     # Create a task with some hardcoded configuration
     task = Task.create(
         project_name="clearml-testing",
         task_name="hf-example",
         task_type="training",
-        module=launch_cmd,
+        script="nlp_example.py",
+        #module=launch_cmd,
         repo="https://github.com/sparticlesteve/clearml-testing.git",
         working_directory="hf-example",
         argparse_args=[("mixed_precision", "bf16")],
         docker="nersc/pytorch:25.06.01",
-        # docker_args=docker_args,
+        #docker_args=container_args,
         # docker_bash_setup_script=docker_setup_bash,
     )
 
     # SLURM job settings
     task.set_user_properties(
         num_nodes=num_nodes,
+        ntasks_per_node=ntasks_per_node,
+        cpus_per_task=cpus_per_task,
     )
 
     # Print the configuration
