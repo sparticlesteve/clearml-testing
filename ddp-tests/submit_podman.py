@@ -1,0 +1,73 @@
+import pprint
+import subprocess
+from typing import Dict, Any
+
+import clearml
+from clearml import Task
+
+
+def get_task_summary(task: Task) -> Dict[str, Any]:
+    summary = dict(
+        id=task.id,
+        task_type=task.task_type,
+        project=task.get_project_name(),
+        name=task.name,
+        status=task.get_status(),
+        tags=list(task.get_tags() or []),
+        parameters=task.get_parameters_as_dict(),
+        user_properties=task.get_user_properties(),
+        script=task.get_script(),
+    )
+    return summary
+
+
+def main():
+
+    # Job config
+    num_nodes = 1
+    ntasks_per_node = 4
+    cpus_per_task = 32
+    #container_args = "--network=host"
+    container_args = "--env RANK=$SLURM_PROCID --env LOCAL_RANK=$SLURM_LOCALID --env WORLD_SIZE=$SLURM_NTASKS"
+    container_setup_script = "export RANK=$SLURM_PROCID; export LOCAL_RANK=$SLURM_LOCALID; export WORLD_SIZE=$SLURM_NTASKS"
+
+    # Build the launch command
+    #launch_cmd = f"torch.distributed.run --rdzv-backend=c10d --nnodes={num_nodes} --nproc-per-node=4 nlp_example.py"
+
+    # Create a task with some hardcoded configuration
+    task = Task.create(
+        project_name="clearml-testing",
+        task_name="ddp-test",
+        task_type="training",
+        script="test_ddp.py",
+        #module=launch_cmd,
+        repo="https://github.com/sparticlesteve/clearml-testing.git",
+        working_directory="ddp-tests",
+        docker="nersc/pytorch:25.06.01",
+        docker_args=container_args,
+        docker_bash_setup_script=container_setup_script,
+    )
+
+    # SLURM job settings
+    task.set_user_properties(
+        num_nodes=num_nodes,
+        ntasks_per_node=ntasks_per_node,
+        cpus_per_task=cpus_per_task,
+    )
+
+    # Print the configuration
+    print("\nCREATED TASK:")
+    pprint.pprint(get_task_summary(task))
+
+    # Enqueue the task
+    enqueue_response = Task.enqueue(
+        task=task,
+        queue_name="experimental",
+    )
+
+    print("\nTASK ENQUEUED:")
+    pprint.pprint(enqueue_response)
+
+
+if __name__ == '__main__':
+    main()
