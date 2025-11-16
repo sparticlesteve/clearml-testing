@@ -24,11 +24,12 @@ def get_task_summary(task: Task) -> Dict[str, Any]:
 def main():
 
     # Job config
-    num_nodes = 1
+    num_nodes = 2
     ntasks_per_node = 4
     cpus_per_task = 32
+    # Container args not used by clearml slurm agent!
     #container_args = "--network=host"
-    container_args = "--env RANK=$SLURM_PROCID --env LOCAL_RANK=$SLURM_LOCALID --env WORLD_SIZE=$SLURM_NTASKS"
+    #container_args = "--env RANK=$SLURM_PROCID --env LOCAL_RANK=$SLURM_LOCALID --env WORLD_SIZE=$SLURM_NTASKS"
     container_setup_script = "export RANK=$SLURM_PROCID; export LOCAL_RANK=$SLURM_LOCALID; export WORLD_SIZE=$SLURM_NTASKS"
 
     # Build the launch command
@@ -44,7 +45,7 @@ def main():
         repo="https://github.com/sparticlesteve/clearml-testing.git",
         working_directory="ddp-tests",
         docker="nersc/pytorch:25.06.01",
-        docker_args=container_args,
+        #docker_args=container_args,
         docker_bash_setup_script=container_setup_script,
     )
 

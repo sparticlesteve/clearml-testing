@@ -24,10 +24,11 @@ def get_task_summary(task: Task) -> Dict[str, Any]:
 def main():
 
     # Job config
-    num_nodes = 1
+    num_nodes = 2
     ntasks_per_node = 4
     cpus_per_task = 32
     #container_args = "--network=host"
+    container_setup_script = "export RANK=$SLURM_PROCID; export LOCAL_RANK=$SLURM_LOCALID; export WORLD_SIZE=$SLURM_NTASKS"
 
     # Build the launch command
     #launch_cmd = f"torch.distributed.run --rdzv-backend=c10d --nnodes={num_nodes} --nproc-per-node=4 nlp_example.py"
@@ -44,7 +45,7 @@ def main():
         argparse_args=[("mixed_precision", "bf16")],
         docker="nersc/pytorch:25.06.01",
         #docker_args=container_args,
-        # docker_bash_setup_script=docker_setup_bash,
+        docker_bash_setup_script=container_setup_script,
     )
 
     # SLURM job settings

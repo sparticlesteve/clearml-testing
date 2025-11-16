@@ -21,6 +21,7 @@ import argparse
 import evaluate
 import torch
 from datasets import load_dataset
+from torch.distributed import init_process_group
 from torch.optim import AdamW
 from torch.utils.data import DataLoader
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, get_linear_schedule_with_warmup, set_seed
@@ -122,12 +123,16 @@ def get_dataloaders(accelerator: Accelerator, batch_size: int = 16):
 
 def training_function(config, args):
 
+    # BEGIN NERSC MODIFICATIONS
+    print(f"MASTER_ADDR {os.getenv('MASTER_ADDR')}")
+    print(f"MASTER_PORT {os.getenv('MASTER_PORT')}")
+    #init_process_group(backend="nccl")
+    # END NERSC MODIFICATIONS
+
     # Initialize accelerator
     accelerator = Accelerator(cpu=args.cpu, mixed_precision=args.mixed_precision)
 
     # BEGIN NERSC MODIFICATIONS
-    print(f"MASTER_ADDR {os.getenv('MASTER_ADDR')}")
-    print(f"MASTER_PORT {os.getenv('MASTER_PORT')}")
     import socket
     rank = accelerator.process_index
     n_ranks = accelerator.num_processes
